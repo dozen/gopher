@@ -1,10 +1,6 @@
 package config
 
-import (
-	"io/ioutil"
-
-	"gopkg.in/yaml.v2"
-)
+import goconfig "github.com/kayac/go-config"
 
 type ConfData struct {
 	Token              string   `yaml:"token"`
@@ -25,16 +21,11 @@ type Jenkins struct {
 
 // conf.ymlをロードし構造体へ格納
 func LoadConfig(path string) *ConfData {
-	buf, err := ioutil.ReadFile(path)
+	d := &ConfData{}
 
-	d := ConfData{}
-	if err != nil {
+	if err := goconfig.LoadWithEnv(d, path); err != nil {
 		panic(err)
 	}
 
-	if err := yaml.Unmarshal(buf, &d); err != nil {
-		panic(err)
-	}
-
-	return &d
+	return d
 }

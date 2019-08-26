@@ -1,4 +1,4 @@
-token: "YOUR TOKEN"
+token: {{ must_env `SLACK_TOKEN` }}
 channel: "Cxxxxxx"
 git_work_dir: "./"
 pull_request_comment: "example"
